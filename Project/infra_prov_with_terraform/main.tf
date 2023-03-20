@@ -240,7 +240,7 @@ provider "aws" {
 # resource "aws_instance" "Adora1" {
 #   ami             = "ami-0557a15b87f6559cf"
 #   key_name        = "volder"
-#   instance_type   = "t2.medium"
+#   instance_type   = "t2.micro"
 #   security_groups = [aws_security_group.django-security-grp-rule-1.id]
 #   subnet_id       = aws_subnet.django-public-subnet1.id
 #   availability_zone = "us-east-1a"
