@@ -175,7 +175,7 @@ jobs:
             sed -i "s|IMAGE|$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$DOCKER_USERNAME/$APP:latest|g" Project/netes_sock-shop/*yaml
             kubectl create namespace sock-shop
             kubectl apply -f Project/netes_sock-shop/
-            kubectl get services sock-shop
+            kubectl get services -n sock-shop
 
   prometheus:
     docker:
@@ -197,32 +197,32 @@ jobs:
           name: Deploy Docker image to EKS cluster
           command: |
             sed -i "s|IMAGE|$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$DOCKER_USERNAME/$APP:latest|g" Project/netes_sock-shop/manifests-monitoring/*yaml
-            kubectl apply -f Poject/netes_sock-shop/manifests-monitoring/      
+            kubectl apply -f Project/netes_sock-shop/manifests-monitoring/      
             
 workflows:
   version: 2
   project:
-    jobs:
-       - init
-       - plan:
-           requires: [init]
-       - hold-apply:
-           type: approval
-           requires: [plan]
-       - apply:
-           requires: [hold-apply]
-       - plan-destroy:
-           requires: [apply]
-       - hold-destroy:
-           type: approval
-           requires: [plan-destroy]
-       - destroy:
-           requires: [hold-destroy]  
+  jobs:
+    #    - init
+    #    - plan:
+    #        requires: [init]
+    #    - hold-apply:
+    #        type: approval
+    #        requires: [plan]
+    #    - apply:
+    #        requires: [hold-apply]
+    #    - plan-destroy:
+    #        requires: [apply]
+    #    - hold-destroy:
+    #        type: approval
+    #        requires: [plan-destroy]
+    #    - destroy:
+    #        requires: [hold-destroy]  
 #       - build-my-app:
  #           requires: [apply]
  #      - deploy-my-app:
  #          requires: [apply]
-       - sock-shop:
-           requires: [apply]
-       - prometheus:
-           requires: [apply]
+   #    - sock-shop:
+   #        requires: [apply]
+        - prometheus
+ #          requires: [apply]
